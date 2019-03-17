@@ -11,21 +11,16 @@ class Solution(object):
         :rtype: List[Interval]
         """
         intervals.sort(key=lambda x:x.start)
-        inter_list=[]
         ans = []
-        for i in intervals:
-            inter_list.append([i.start, i.end])
-        while inter_list:
-            if len(inter_list) == 1:
-                ans.append(inter_list[0])
-                break
+        if len(intervals) == 0:
+            return intervals
+        ans.append(intervals[0])
+        for i in range (1,len(intervals)):
+            if(ans[-1].end >= intervals[i].start):
+                if (ans[-1].end < intervals[i].end):
+                    ans[-1].end = intervals[i].end
             else:
-                if (inter_list[0][1] >= inter_list[1][0]) and (inter_list[0][1] <= inter_list[1][1]):
-                    inter_list[0][1] = inter_list[1][1]
-                    del inter_list[1]
-                elif (inter_list[0][1] >= inter_list[1][0]) and (inter_list[0][1] > inter_list[1][1]):
-                    del inter_list[1]
-                else:
-                    ans.append(inter_list[0])
-                    del inter_list[0]
+                ans.append(intervals[i])
         return ans
+    
+    
